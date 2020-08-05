@@ -1,0 +1,64 @@
+<DOCTYPE html>
+    <html>
+    <head>
+      <title>Day2-Directives</title>
+      <meta charset='utf-8' />
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+      <div id="app">
+        
+        <div class="row">
+          <div class="col-md-4">
+            <label><b>Name</b></label>
+            <input type="text" v-model="name" value="" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label><b>Categories</b></label>
+            <div v-for="category in categories" >
+              <input type="checkbox" v-model="scategories" :value="category.name"/>
+              <label>{{category.name}}</label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <button @click="showlist = !showlist" class="btn btn-primary">{{showlist?'Hide List':'Show List'}}</button>
+          </div>
+        </div>
+         
+        <div class="row">
+          <div class="col-md-4">
+            <p>The name is : {{name}}</p>
+          </div>
+          <div class="col-md-4">
+            <div v-if="showlist">
+              <p>Selected Categories :</p>
+              <ul>
+                <li v-for="selected in scategories">
+                  {{ selected }}
+                </li>
+              </ul>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    
+    <script>
+    const app = new Vue({
+      el: '#app',
+      data: { 
+       name: '',
+       showlist : true,
+       scategories:[],
+       categories:[
+         {name:'Electronics'},
+         {name:'Fashion'},
+         {name:'Furniture'},
+         {name:'Grocery'}
+       ]
+      }
+    })
+    </script>
+    </body>
+    </html>
