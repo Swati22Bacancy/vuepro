@@ -1,0 +1,24 @@
+<DOCTYPE html>
+    <html>
+    <head>
+      <title>Vue Pro</title>
+      <meta charset='utf-8' />
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+      <div id="app">
+        <p>{{ message }}</p>
+        <p>{{ (stock>0) ?'In Stock' : 'Out of Stock' }}</p>
+      </div>
+    
+    <script>
+    const app = new Vue({
+      el: '#app',
+      data: { 
+       message: 'Hello Vue',
+       stock: 0  
+      }
+    })
+    </script>
+    </body>
+    </html>
