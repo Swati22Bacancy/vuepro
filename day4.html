@@ -1,0 +1,55 @@
+<DOCTYPE html>
+    <html>
+    <head>
+      <title>Day4-Computed Property</title>
+      <meta charset='utf-8' />
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vee-validate@latest/dist/vee-validate.js"></script>
+    </head>
+    <body>
+      <div class="container">
+        <div id="app">
+          <div class="row">
+            <div class="col-md-4">
+              <label><b>Task Manager</b></label>
+              <ul class="list-group" v-for="task, key in tasks">
+                <li class="list-group-item">
+                  
+                  <del v-if="task.isCompleted">{{task.name}}</del>
+                  <span v-if="!task.isCompleted">{{task.name}}</span>
+                  <button class="btn btn-success" style="float:right" v-if="task.isCompleted" @click="dochange(key, task, 'reopen')">Re Open</button>
+                  <button class="btn btn-primary" style="float:right" v-if="!task.isCompleted" @click="dochange(key, task, 'complete')">Mark as Complete</button>
+                </li>
+                
+              </ul>
+            </div>
+          
+        </div>
+      </div>
+    <script>
+    const app = new Vue({
+      el: '#app',
+      data: { 
+        tasks:[
+         {name:'Do Research', id:1, isCompleted:false},
+         {name:'Do Learn', id:2, isCompleted:false},
+         {name:'Do Exercise', id:3, isCompleted:false},
+         {name:'Do Submit', id:4, isCompleted:false}
+       ]
+      },
+      methods:{
+        dochange : function (key, task, action)
+        {
+          task.isCompleted = (action=='complete')?true:false;
+        }
+      }
+    })
+    </script>
+    <style>
+      .active {
+          background: green;
+        }
+    </style>
+    </body>
+    </html>
