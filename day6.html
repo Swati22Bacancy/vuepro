@@ -1,0 +1,140 @@
+<DOCTYPE html>
+    <html>
+    <head>
+      <title>Day6-Form Validation</title>
+      <meta charset='utf-8' />
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vee-validate@latest/dist/vee-validate.js"></script>
+    </head>
+    <body>
+      <div class="container">
+        <div id="app">
+          <h4>Form Validation</h4>
+          <form @submit.prevent="checkForm" method="post" >
+
+            <p>
+              <label for="first_name">First Name</label>
+              <input id="first_name" v-model="formData.first_name" type="text" name="first_name" class="form-control">
+            </p>
+
+            <p>
+              <label for="last_name">Last Name</label>
+              <input id="last_name" v-model="formData.last_name" type="text" name="last_name" class="form-control">
+            </p>
+            <p>
+              <label><b>Categories : </b></label>
+              <div v-for="category in categories" >
+                <input type="checkbox" v-model="formData.scategories" :value="category.name"/>
+                <label>{{category.name}}</label>
+              </div>
+            </p>
+            <p>
+              <input type="submit" class="btn btn-primary" :disabled="!isFormValid" value="Submit" >
+            </p>
+
+          </form>
+
+          <h4>Title Manager</h4>
+            <label for="title">Title</label>
+            <input id="title" v-model="title" type="text" name="title" class="form-control" placeholder="Enter Title">
+            <input id="key" v-model="key" type="hidden" name="key" class="form-control">
+            <button class="btn btn-success" @click="addtitle()">{{titlebtn}}</button>
+            
+          
+          <h5>Title List</h5>
+          <ul class="list-group" v-for="title, key in titles">
+            <li class="list-group-item">
+              
+              <span >{{title}}</span>
+              <button class="btn btn-primary" @click="doedit(key, title)">Edit</button>
+              <button class="btn btn-danger" @click="dodelete(key)">Delete</button>
+            </li>
+            
+          </ul>
+
+      </div>
+    <script>
+    const app = new Vue({
+      el: '#app',
+      data: { 
+        formData:{
+          first_name:'',
+          last_name:'',
+          scategories :[]
+        },
+        title:'',
+        key:'',
+        titles:[],
+        titlebtn:'Add',
+        categories:[
+          {name:'Electronics'},
+          {name:'Fashion'},
+          {name:'Furniture'},
+          {name:'Grocery'}
+        ]
+      },
+      methods:{
+        checkForm() 
+        {
+          console.log(this.formData);
+        },
+        addtitle()
+        {
+          if(this.titlebtn == 'Update')
+          {
+            this.titles[this.key] = this.title;
+            this.key = '';
+            this.titlebtn ='Add';
+          }
+          else
+          {
+            this.titles.push(this.title)
+          }
+          this.title='';
+        },
+        dodelete(key)
+        {
+          this.titles.splice(key,1)
+        },
+        doedit(key, title)
+        {
+          this.title=title;
+          this.key=key;
+          this.titlebtn ='Update';
+        },
+        isValid(prop) {
+           switch (prop) {
+                case 'first_name':
+                    return this.formData.first_name != ''
+                    break
+                case 'last_name':
+                    return this.formData.last_name != ''
+                    break
+                case 'scategories':
+                    return this.formData.scategories.length > 0
+                    break
+                default:
+                    return false
+            }
+        },
+        
+      },
+      computed:{
+        isFormValid(){
+        return (
+                this.isValid('first_name') && 
+                this.isValid('last_name') &&
+                this.isValid('scategories') 
+            )
+        }
+      }
+    })
+    </script>
+    <style>
+      .active {
+          background: green;
+        }
+    </style>
+    </body>
+    </html>
